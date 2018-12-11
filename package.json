@@ -1,0 +1,22 @@
+{
+  "name": "@matersoft/aws-signature",
+  "version": "1.0.0",
+  "description": "TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "start": "tsc && node dist/index.js",
+    "build:w": "tsc -w",
+    "build": "tsc "
+  },
+  "repository": {
+    "type": "git",
+    "url": "matersoft@vs-ssh.visualstudio.com:v3/matersoft/node-modules/aws-signature"
+  },
+  "keywords": [],
+  "author": "Luis Jasso <luisnoejasso@gmail.com> (https://www.linkedin.com/in/luisnoejassofullstackdev)",
+  "license": "ISC",
+  "dependencies": {
+    "@matersoft/mypluralize": "^1.0.0"
+  }
+}
