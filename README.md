@@ -8,7 +8,7 @@ bower install @skyalert/aws-signature --save
 ## Usage
 ### Javascript
 ```javascript
-var pluralise = require('@skyalert/aws-signature');
+var awsSignature = require('@skyalert/aws-signature');
 ```
 ```sh
 ```
