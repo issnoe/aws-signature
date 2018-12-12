@@ -1,9 +1,13 @@
-export declare function sendRequest(): string;
 interface AWSConfiguration {
     accessKey: string;
     secretKey: string;
     region?: string;
     service?: string;
+    method?: string;
+    host?: string;
+    endpoint?: string;
+    contentType?: string;
+    body?: any;
 }
 interface AWSAuthorization {
     'Host': string;

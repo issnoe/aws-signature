@@ -20,13 +20,12 @@
   "author": "Luis Jasso <luisnoejasso@gmail.com> (https://www.linkedin.com/in/luisnoejassofullstackdev)",
   "license": "ISC",
   "dependencies": {
-    "@matersoft/mypluralize": "^1.0.0",
-    "crypto": "^1.0.1",
     "fetch": "^1.1.0",
-    "request-promise-native": "^1.0.5",
-    "s": "^0.1.1"
+    "request-promise-native": "^1.0.5"
   },
   "devDependencies": {
+    "@types/crypto-js": "^3.1.43",
+    "@types/node": "^10.12.12",
     "jest": "^19.0.2",
     "typescript": "^3.2.2"
   }
