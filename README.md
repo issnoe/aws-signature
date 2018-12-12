@@ -1,40 +1,28 @@
-# Introduction
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project.
-
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
 
 ## Installation
 ```sh
 npm install @skyalert/aws-signature --save
 yarn add @skyalert/aws-signature
-bower install pluralize --save
+bower install @skyalert/aws-signature --save
 ```
 ## Usage
 ### Javascript
 ```javascript
 var pluralise = require('@skyalert/aws-signature');
-var boys = pluralise.getPlural('Boy');
 ```
 ```sh
-Output should be 'Boys'
 ```
 ### TypeScript
 ```typescript
-import { getPlural } from '@skyalert/aws-signature';
-console.log(getPlural('Goose'))
+import { sing } from '@skyalert/aws-signature';
+
 ```
 ```sh
-Output should be 'Geese'
 ```
 ### AMD
 ```javascript
 define(function(require,exports,module){
-  var pluralise = require('mypluralize');
+  var awsSsignature = require('@skyalert/aws-signature');
 });
 ```
 ## Test
