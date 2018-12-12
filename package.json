@@ -1,22 +1,33 @@
 {
   "name": "@matersoft/aws-signature",
   "version": "1.0.0",
-  "description": "TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project.",
+  "description": "Packague to sing a request to AWS API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "start": "tsc && node dist/index.js",
     "build:w": "tsc -w",
-    "build": "tsc "
+    "build": "tsc ",
+    "test": "tsc && jest"
   },
   "repository": {
     "type": "git",
     "url": "matersoft@vs-ssh.visualstudio.com:v3/matersoft/node-modules/aws-signature"
   },
-  "keywords": [],
+  "keywords": [
+    "AWS"
+  ],
   "author": "Luis Jasso <luisnoejasso@gmail.com> (https://www.linkedin.com/in/luisnoejassofullstackdev)",
   "license": "ISC",
   "dependencies": {
-    "@matersoft/mypluralize": "^1.0.0"
+    "@matersoft/mypluralize": "^1.0.0",
+    "crypto": "^1.0.1",
+    "fetch": "^1.1.0",
+    "request-promise-native": "^1.0.5",
+    "s": "^0.1.1"
+  },
+  "devDependencies": {
+    "jest": "^19.0.2",
+    "typescript": "^3.2.2"
   }
 }

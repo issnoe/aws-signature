@@ -10,14 +10,14 @@ TODO: Guide users through getting your code up and running on their own system. 
 
 ## Installation
 ```sh
-npm install mypluralize --save
-yarn add mypluralize
+npm install @skyalert/aws-signature --save
+yarn add @skyalert/aws-signature
 bower install pluralize --save
 ```
 ## Usage
 ### Javascript
 ```javascript
-var pluralise = require('mypluralize');
+var pluralise = require('@skyalert/aws-signature');
 var boys = pluralise.getPlural('Boy');
 ```
 ```sh
@@ -25,7 +25,7 @@ Output should be 'Boys'
 ```
 ### TypeScript
 ```typescript
-import { getPlural } from 'mypluralize';
+import { getPlural } from '@skyalert/aws-signature';
 console.log(getPlural('Goose'))
 ```
 ```sh
