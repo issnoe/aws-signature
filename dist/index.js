@@ -1,13 +1,40 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const crypto = require("crypto");
+/**
+def sign(key, msg):
+    return hmac.new(key, msg.encode("utf-8"), hashlib.sha256).digest()
+
+def getSignatureKey(key, date_stamp, regionName, serviceName):
+    kDate = sign(('AWS4' + key).encode('utf-8'), date_stamp)
+    kRegion = sign(kDate, regionName)
+    kService = sign(kRegion, serviceName)
+    kSigning = sign(kService, 'aws4_request')
+    return kSigning
+ */
+function encrypt(key, src, encoding) {
+    return crypto.createHmac('sha256', key).update(src, 'utf8').digest();
+}
+;
+function hmac(key, stringTostring) {
+    return encrypt(key, stringTostring, 'hex');
+}
+function signKey(key, msg) {
+    return "";
+}
+function getSignatureKey(key, date_stamp, regionName, serviceName) {
+    const kDate = signKey('AWS4' + key); //signKey(('AWS4' + key).encode('utf-8'), date_stamp)
+    const kRegion = signKey(kDate, regionName);
+    const kService = signKey(kRegion, serviceName);
+    const kSigning = signKey(kService, 'aws4_request');
+    return kSigning;
+}
 function hashSha256(body) {
     return crypto.createHash('sha256').update(body).digest('hex');
 }
-function encrypt(key, src, encoding) {
-    return crypto.createHmac('sha256', key).update("src", 'utf8').digest();
-}
-;
+/* function encrypt(key: string, src?: string, encoding?: string) {
+  return crypto.createHmac('sha256', key).update("src", 'utf8').digest();
+}; */
 function hash(src) {
     src = src || '';
     return crypto.createHash('sha256').update(src, 'utf8').digest('hex');
@@ -43,20 +70,32 @@ function canonicalRequest() {
 }
 function sing(config) {
     const xAmzDate = getDateTime();
-    const authorization = getAuthorization(config, xAmzDate);
+    //const authorization = getAuthorization(config, xAmzDate);
     let canonicalUri = '/';
     let canonicalQuerystring = '';
     let canonicalHeaders = 'content-type:' + config.contentType + '\n' + 'host:' + config.host + '\n' + 'x-amz-date:' + xAmzDate.date + '\n';
     const signedHeaders = 'content-type;host;x-amz-date;';
     const payloadHash = hashSha256("{s:''}");
-    console.log(payloadHash);
-    const request = {
+    const canonicalRequest = config.method + '\n' + canonicalUri + '\n' + canonicalQuerystring + '\n' + canonicalHeaders + '\n' + signedHeaders + '\n' + payloadHash;
+    const algorithm = 'AWS4-HMAC-SHA256';
+    const credentialScope = xAmzDate.date + '/' + config.region + '/' + config.service + '/' + 'aws4_request';
+    const canonicalRequestHash = hashSha256(canonicalRequest);
+    //hashlib.sha256(canonicalRequest.encode('utf-8')).hexdigest()
+    const stringTosign = algorithm + '\n' + xAmzDate.dateISO + '\n' + credentialScope + '\n' + canonicalRequestHash;
+    const signingKey = getSignatureKey(config.secretKey, xAmzDate.date, config.region, config.service);
+    const signature = hmac(signingKey, stringTosign);
+    /**
+     signature = hmac.new(signing_key, (string_to_sign).encode('utf-8'), hashlib.sha256).hexdigest()
+     */
+    const authorizationHeader = algorithm + ' ' + 'Credential=' + config.accessKey + '/' + credentialScope + ', ' + 'SignedHeaders=' + signedHeaders + ', ' + 'Signature=' + signature;
+    /*  authorization_header = algorithm + ' ' + 'Credential=' + access_key + '/' + credential_scope + ', ' +  'SignedHeaders=' + signed_headers + ', ' + 'Signature=' + signature */
+    const requestHeaders = {
         'Host': 'pinpoint.us-east-1.amazonaws.com',
         'X-Amz-Date': xAmzDate.dateISO,
-        'Authorization': authorization,
+        'Authorization': authorizationHeader,
         'Content-Type': 'application/json'
     };
     //const requestStr = canonicalRequest(request);
-    return request;
+    return requestHeaders;
 }
 exports.sing = sing;

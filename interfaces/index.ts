@@ -2,8 +2,8 @@
 export interface AWSConfiguration {
   accessKey: string,
   secretKey: string,
-  region?: string,
-  service?: string,
+  region: string,
+  service: string,
   method?: string,
   host?: string,
   endpoint?: string,

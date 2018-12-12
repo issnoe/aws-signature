@@ -11,13 +11,19 @@ def getSignatureKey(key, date_stamp, regionName, serviceName):
     kSigning = sign(kService, 'aws4_request')
     return kSigning
  */
+function encrypt(key: string, src: string, encoding?: string): any {
+  return crypto.createHmac('sha256', key).update(src, 'utf8').digest();
+};
+function hmac(key: string, stringTostring: string) {
+  return encrypt(key, stringTostring, 'hex');
+}
 
-function signKey(key: string, msg: string): string {
+function signKey(key: string, msg?: string): string {
   return ""
 }
 
 function getSignatureKey(key: string, date_stamp: string, regionName: string, serviceName: string): string {
-  const kDate = signKey(('AWS4' + key).encode('utf-8'), date_stamp)
+  const kDate = signKey('AWS4' + key);//signKey(('AWS4' + key).encode('utf-8'), date_stamp)
   const kRegion = signKey(kDate, regionName)
   const kService = signKey(kRegion, serviceName)
   const kSigning = signKey(kService, 'aws4_request')
@@ -30,9 +36,9 @@ function hashSha256(body: string): string {
   return crypto.createHash('sha256').update(body).digest('hex')
 }
 
-function encrypt(key: string, src?: string, encoding?: string) {
+/* function encrypt(key: string, src?: string, encoding?: string) {
   return crypto.createHmac('sha256', key).update("src", 'utf8').digest();
-};
+}; */
 
 function hash(src: any) {
   src = src || '';
@@ -94,15 +100,24 @@ export function sing(config: AWSConfiguration): AWSAuthorization {
   //hashlib.sha256(canonicalRequest.encode('utf-8')).hexdigest()
   const stringTosign = algorithm + '\n' + xAmzDate.dateISO + '\n' + credentialScope + '\n' + canonicalRequestHash
 
-  const request = {
+
+  const signingKey = getSignatureKey(config.secretKey, xAmzDate.date, config.region, config.service)
+
+  const signature = hmac(signingKey, stringTosign)
+  /**
+   signature = hmac.new(signing_key, (string_to_sign).encode('utf-8'), hashlib.sha256).hexdigest()
+   */
+  const authorizationHeader = algorithm + ' ' + 'Credential=' + config.accessKey + '/' + credentialScope + ', ' + 'SignedHeaders=' + signedHeaders + ', ' + 'Signature=' + signature
+  /*  authorization_header = algorithm + ' ' + 'Credential=' + access_key + '/' + credential_scope + ', ' +  'SignedHeaders=' + signed_headers + ', ' + 'Signature=' + signature */
+  const requestHeaders = {
     'Host': 'pinpoint.us-east-1.amazonaws.com',
     'X-Amz-Date': xAmzDate.dateISO,
-    'Authorization': authorization,
+    'Authorization': authorizationHeader,
     'Content-Type': 'application/json'
   }
   //const requestStr = canonicalRequest(request);
 
-  return request;
+  return requestHeaders;
 }
 
 
