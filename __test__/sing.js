@@ -52,13 +52,15 @@ const config = {
   secretKey: '2D4F8fmBmyisDjSeeRm/6Of8FAd63d5gWBz4RW+q',
   region: 'us-east-1',
   service: 'mobiletargeting',
+  contentType: 'application/json',
+  host: 'pinpoint.us-east-1.amazonaws.com',
   body: JSON.stringify(params),
 }
 const awsSing = index.sing(config)
 console.log(awsSing);
 var options = {
   method: 'POST',
-  uri: `https://pinpoint.us-east-1.amazonaws.com/v1/apps/2cdd69d44b9840a397344f601ae90e8b`,
+  uri: `https://pinpoint.us-east-1.amazonaws.com/v1/apps/2cdd69d44b9840a397344f601ae90e8b/messages`,
   headers: awsSing
 }
 
