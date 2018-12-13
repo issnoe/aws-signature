@@ -36,7 +36,7 @@ function getDateTime() {
 function sing(config) {
     const xAmzDate = getDateTime();
     let canonicalUri = '/';
-    let canonicalQuerystring = 'messages';
+    let canonicalQuerystring = '';
     let canonicalHeaders = 'content-type:' + config.contentType + '\n' + 'host:' + config.host + '\n' + 'x-amz-date:' + xAmzDate.date + '\n';
     const signedHeaders = 'content-type;host;x-amz-date;';
     const payloadHash = hashSha256(config.body).toString('hex');
@@ -46,7 +46,7 @@ function sing(config) {
     //old
     /*
       const canonicalRequestHash = hashSha256(canonicalRequest)
-
+  
       const stringToSign = algorithm + '\n' + xAmzDate.dateISO + '\n' + credentialScope + '\n' + canonicalRequestHash
     */
     //--
@@ -69,3 +69,6 @@ function sing(config) {
     return requestHeaders;
 }
 exports.sing = sing;
+async function run() {
+}
+exports.run = run;

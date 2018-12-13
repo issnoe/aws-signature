@@ -87,5 +87,9 @@ export function sing(config: AWSConfiguration): AWSAuthorization {
   return requestHeaders;
 }
 
+export async function run() {
+
+}
+
 
 
