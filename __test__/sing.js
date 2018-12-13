@@ -3,24 +3,6 @@ var index = require('../dist/index.js');
 
 const fetch = require('fetch').fetchUrl
 const requestPromise = require('request-promise-native')
-
-const config = {
-  accessKey: 'AKIAIJIC4AGM75HKF6DA',
-  secretKey: '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',
-  region: 'us-east-1',
-  service: 'mobiletargeting'
-}
-const awsSing = index.sing(config)
-console.log(awsSing);
-var options = {
-  method: 'GET',
-  uri: `https://pinpoint.us-east-1.amazonaws.com/v1/apps/2cdd69d44b9840a397344f601ae90e8b`,
-  headers: awsSing
-}
-
-requestPromise(options, (err, res) => {
-  console.log(err, res.body);
-})
 var params = {
   "Context": {
 
@@ -64,6 +46,26 @@ var params = {
   },
 
 }
+const config = {
+  method: 'POST',
+  accessKey: 'AKIAIJIC4AGM75HKF6DA',
+  secretKey: '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',
+  region: 'us-east-1',
+  service: 'mobiletargeting',
+  body: JSON.stringify(params),
+}
+const awsSing = index.sing(config)
+console.log(awsSing);
+var options = {
+  method: 'POST',
+  uri: `https://pinpoint.us-east-1.amazonaws.com/v1/apps/2cdd69d44b9840a397344f601ae90e8b`,
+  headers: awsSing
+}
+
+requestPromise(options, (err, res) => {
+  console.log(err, res.body);
+})
+
 fetch('https://pinpoint.us-east-1.amazonaws.com/v1/apps/2cdd69d44b9840a397344f601ae90e8b/messages', {
   method: 'POST', // or 'PUT'
   body: JSON.stringify(params),

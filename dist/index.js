@@ -17,13 +17,13 @@ function encrypt(key, src, encoding) {
 }
 ;
 function hmac(key, stringTostring) {
-    return encrypt(key, stringTostring, 'hex');
+    return crypto.createHmac('sha256', key).update(stringTostring, 'utf8').digest('hex');
 }
 function signKey(key, msg) {
-    return "";
+    return crypto.createHmac('sha256', key).update(msg, 'utf8').digest();
 }
 function getSignatureKey(key, date_stamp, regionName, serviceName) {
-    const kDate = signKey('AWS4' + key); //signKey(('AWS4' + key).encode('utf-8'), date_stamp)
+    const kDate = signKey('AWS4' + key, date_stamp); //signKey(('AWS4' + key).encode('utf-8'), date_stamp)
     const kRegion = signKey(kDate, regionName);
     const kService = signKey(kRegion, serviceName);
     const kSigning = signKey(kService, 'aws4_request');
@@ -75,7 +75,7 @@ function sing(config) {
     let canonicalQuerystring = '';
     let canonicalHeaders = 'content-type:' + config.contentType + '\n' + 'host:' + config.host + '\n' + 'x-amz-date:' + xAmzDate.date + '\n';
     const signedHeaders = 'content-type;host;x-amz-date;';
-    const payloadHash = hashSha256("{s:''}");
+    const payloadHash = hashSha256(config.body);
     const canonicalRequest = config.method + '\n' + canonicalUri + '\n' + canonicalQuerystring + '\n' + canonicalHeaders + '\n' + signedHeaders + '\n' + payloadHash;
     const algorithm = 'AWS4-HMAC-SHA256';
     const credentialScope = xAmzDate.date + '/' + config.region + '/' + config.service + '/' + 'aws4_request';
@@ -99,3 +99,9 @@ function sing(config) {
     return requestHeaders;
 }
 exports.sing = sing;
+/**
+ * To do
+ *  - Check signature
+ *      - View code
+ *  - Test header to Post
+*/
