@@ -2,7 +2,6 @@
 var index = require('../dist/index.js');
 
 const fetch = require('fetch').fetchUrl
-const requestPromise = require('request-promise-native')
 
 test('Get AWS Sign Configuration', () => {
   const config = {
@@ -19,9 +18,7 @@ test('Get AWS Sign Configuration', () => {
     headers: awsSing
   }
 
-  requestPromise(options, (err, res) => {
-    console.log(err, res.body);
-  })
+
   var params = {
     "Context": {
 

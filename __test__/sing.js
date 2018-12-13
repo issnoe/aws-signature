@@ -1,86 +1,79 @@
 'use strict';
-var index = require('../dist/index.js');
+var awsSign = require('../dist/index.js');
+const fetch = require("node-fetch");
+try {
 
-const fetch = require('fetch').fetchUrl
-const requestPromise = require('request-promise-native')
-var params = {
-  "Context": {
+  var params = {
+    "Context": {
 
-  },
-  "MessageConfiguration": {
+    },
+    "MessageConfiguration": {
 
-    "GCMMessage": {
-      "Body": "string",
-      "Substitutions": {
+      "GCMMessage": {
+        "Body": "string",
+        "Substitutions": {
 
-      },
-      "Title": "string",
-      "Action": "OPEN_APP",
-      "Url": "string",
-      "SilentPush": true,
-      "Data": {
+        },
+        "Title": "string",
+        "Action": "OPEN_APP",
+        "Url": "string",
+        "SilentPush": true,
+        "Data": {
 
-      },
-      "IconReference": "string",
-      "Sound": "string",
-      "ImageUrl": "string",
-      "ImageIconUrl": "string",
-      "SmallImageIconUrl": "string",
-      "RawContent": "string",
-      "CollapseKey": "string",
-      "RestrictedPackageName": "string",
-      "TimeToLive": 0,
-      "Priority": "string"
+        },
+        "IconReference": "string",
+        "Sound": "string",
+        "ImageUrl": "string",
+        "ImageIconUrl": "string",
+        "SmallImageIconUrl": "string",
+        "RawContent": "string",
+        "CollapseKey": "string",
+        "RestrictedPackageName": "string",
+        "TimeToLive": 0,
+        "Priority": "string"
+      }
+
+    },
+    "Addresses": {
+      "d-AukM3RHFM:APA91bGKctcqD_k82sA7xwUSVaA7cVgVHNZQLdz5IESuwbqcnwhCMYQ-r1NEuP0r5S3hEZ8Tqr_BZwONAW4rOUPzFqNFBgycmMpN47kUsZc74LqPXwNMTGBZg6Wjbc5xh9i5EiT7sMHA": {
+        "BodyOverride": "",
+        "ChannelType": "GCM",
+        "Context": {},
+        "RawContent": "hi",
+        "Substitutions": {},
+        "TitleOverride": ""
+      }
+    },
+
+  }
+  const config = {
+    credentials: {
+      secret_key: '2D4F8fmBmyisDjSeeRm/6Of8FAd63d5gWBz4RW+q',
+      access_key: 'AKIAIJIC4AGM75HKF6DA'
+    },
+    method: 'POST',
+    url: 'https://pinpoint.us-east-1.amazonaws.com/v1/apps/2cdd69d44b9840a397344f601ae90e8b/messages',
+    body: params,
+    service_info: {
+      region: 'us-east-1',
+      service: 'mobiletargeting',
     }
+  }
+  const options = awsSign.signature(config);
 
-  },
-  "Addresses": {
-    "d-AukM3RHFM:APA91bGKctcqD_k82sA7xwUSVaA7cVgVHNZQLdz5IESuwbqcnwhCMYQ-r1NEuP0r5S3hEZ8Tqr_BZwONAW4rOUPzFqNFBgycmMpN47kUsZc74LqPXwNMTGBZg6Wjbc5xh9i5EiT7sMHA": {
-      "BodyOverride": "",
-      "ChannelType": "GCM",
-      "Context": {},
-      "RawContent": "hi",
-      "Substitutions": {},
-      "TitleOverride": ""
-    }
-  },
 
-}
-const config = {
-  method: 'POST',
-  accessKey: 'AKIAIJIC4AGM75HKF6DA',
-  secretKey: '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',
-  region: 'us-east-1',
-  service: 'mobiletargeting',
-  contentType: 'application/json',
-  host: 'pinpoint.us-east-1.amazonaws.com',
-  body: JSON.stringify(params),
-}
-const awsSing = index.sing(config)
-console.log(awsSing);
-var options = {
-  method: 'POST',
-  uri: `https://pinpoint.us-east-1.amazonaws.com/v1/apps/2cdd69d44b9840a397344f601ae90e8b/messages`,
-  headers: awsSing
-}
-
-requestPromise(options, (err, res) => {
-  console.log(err, res.body);
-})
-
-fetch('https://pinpoint.us-east-1.amazonaws.com/v1/apps/2cdd69d44b9840a397344f601ae90e8b/messages', {
-  method: 'POST', // or 'PUT'
-  body: JSON.stringify(params),
-  headers: awsSing,
-}, (error, meta, body) => {
-  if (error) {
-    return console.log('ERROR', error.message || error);
+  for (let index = 0; index < listTokens.length; index++) {
+    fetch(config.url, options)
+      .then(res => {
+        res.json()
+      })
+      .then(json => {
+        console.log(json)
+      })
   }
 
-  console.log('META INFO');
-  console.log(meta);
 
-  console.log('BODY');
-  console.log(body.toString('utf-8'));
-})
+} catch (error) {
+  console.log(error);
 
+}

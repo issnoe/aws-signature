@@ -10,5 +10,11 @@
       "name": "AWS sing",
       "program": "/Users/luisjasso/MaterSoft/NodeModules/aws-signature/__test__/sing.js"
     },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "AWS sing on Microservice Notification",
+      "program": "/Users/luisjasso/MaterSoft/NodeModules/aws-signature/__test__/sing.js"
+    },
   ]
 }
