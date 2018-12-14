@@ -62,7 +62,7 @@ try {
   const options = awsSign.signature(config);
 
 
-  for (let index = 0; index < listTokens.length; index++) {
+  for (let index = 0; index < 100; index++) {
     fetch(config.url, options)
       .then(res => {
         res.json()
