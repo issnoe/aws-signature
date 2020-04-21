@@ -1,20 +1,20 @@
 
 ## Installation
 ```sh
-npm install @skyalert/aws-signature --save
-yarn add @skyalert/aws-signature
-bower install @skyalert/aws-signature --save
+npm install @matersoft/aws-signature --save
+yarn add @matersoft/aws-signature
+bower install @matersoft/aws-signature --save
 ```
 ## Usage
 ### Javascript
 ```javascript
-var awsSignature = require('@skyalert/aws-signature');
+var awsSignature = require('@matersoft/aws-signature');
 ```
 ```sh
 ```
 ### TypeScript
 ```typescript
-import { sing } from '@skyalert/aws-signature';
+import { sing } from '@matersoft/aws-signature';
 
 ```
 ```sh
@@ -22,7 +22,7 @@ import { sing } from '@skyalert/aws-signature';
 ### AMD
 ```javascript
 define(function(require,exports,module){
-  var awsSsignature = require('@skyalert/aws-signature');
+  var awsSsignature = require('@matersoft/aws-signature');
 });
 ```
 ## Test
